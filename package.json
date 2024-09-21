@@ -6,16 +6,26 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/main.js"
+    "start": "node ./dist/main.js",
+    "lint": "eslint ./src/**",
+    "lint:fix": "eslint ./src/** --fix"
   },
   "author": "xphnx",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0",
+    "inversify": "^6.0.2",
+    "reflect-metadata": "^0.2.2",
     "tslog": "^3.3.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
     "typescript": "^5.6.2"
   }
 }

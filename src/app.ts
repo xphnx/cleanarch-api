@@ -2,39 +2,39 @@ import express, { Express } from 'express';
 import { Server } from 'http';
 import { UsersController } from './users/users.controller';
 import { Logger } from './logger/logger.interface';
-import { injectable, inject } from "inversify";
-import { COMPONENT_TYPE } from './fileTypes';
+import { injectable, inject } from 'inversify';
+import { COMPONENT_TYPE } from './types';
 import { Exeption } from './errors/exeption.interface';
 
 import 'reflect-metadata';
 
 @injectable()
 export class App {
-    app: Express;
-    server: Server;
-    port: number;
+	app: Express;
+	server: Server;
+	port: number;
 
-    constructor(
-        @inject(COMPONENT_TYPE.Logger) private logger: Logger,
-        @inject(COMPONENT_TYPE.Users) private usersController: UsersController,
-        @inject(COMPONENT_TYPE.ExeptionFilter) private exeptionFilter: Exeption,
-    ) {
-        this.app = express();
-        this.port = 8000;
-    }
+	constructor(
+		@inject(COMPONENT_TYPE.Logger) private logger: Logger,
+		@inject(COMPONENT_TYPE.Users) private usersController: UsersController,
+		@inject(COMPONENT_TYPE.ExeptionFilter) private exeptionFilter: Exeption,
+	) {
+		this.app = express();
+		this.port = 8000;
+	}
 
-    useRouter() {
-        this.app.use('/users', this.usersController.router);
-    }
+	useRouter(): void {
+		this.app.use('/users', this.usersController.router);
+	}
 
-    useExeptionFilter() {
-        this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter))
-    }
+	useExeptionFilter(): void {
+		this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
+	}
 
-    public async init() {
-        this.useRouter();
-        this.useExeptionFilter();
-        this.server = this.app.listen(this.port);
-        this.logger.info(`Server started on http://localhost:${this.port}`);
-    }
+	public async init(): Promise<void> {
+		this.useRouter();
+		this.useExeptionFilter();
+		this.server = this.app.listen(this.port);
+		this.logger.info(`Server started on http://localhost:${this.port}`);
+	}
 }
