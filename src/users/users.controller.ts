@@ -18,7 +18,7 @@ export class UsersController extends BaseController implements Users {
 	}
 
 	signIn(req: Request, res: Response, next: NextFunction): void {
-		this.ok(res, 'Sign In');
+		this.ok(res, 'Sign In Test');
 	}
 
 	signUp(req: Request, res: Response, next: NextFunction): void {
