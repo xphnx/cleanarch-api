@@ -8,12 +8,16 @@
     "build": "tsc",
     "start": "node ./dist/main.js",
     "dev": "nodemon",
+    "dev:inspect": "nodemon -e ts,json --exec node --inspect=localhost:9222 -r ts-node/register src/main.ts",
     "lint": "eslint ./src/**",
-    "lint:fix": "eslint ./src/** --fix"
+    "lint:fix": "eslint ./src/** --fix",
+    "doctor": "npx clinic doctor --on-port 'autocannon -m POST localhost:8000/users/sign-in' -- node dist/main.js"
   },
   "author": "xphnx",
   "license": "ISC",
   "dependencies": {
+    "autocannon": "^7.15.0",
+    "clinic": "^13.0.0",
     "express": "^4.21.0",
     "inversify": "^6.0.2",
     "reflect-metadata": "^0.2.2",
