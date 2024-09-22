@@ -5,6 +5,7 @@ import { Logger } from './logger/logger.interface';
 import { injectable, inject } from 'inversify';
 import { COMPONENT_TYPE } from './types';
 import { Exeption } from './errors/exeption.interface';
+import { json } from 'body-parser';
 
 import 'reflect-metadata';
 
@@ -23,6 +24,10 @@ export class App {
 		this.port = 8000;
 	}
 
+	useMiddleware(): void {
+		this.app.use(json());
+	}
+
 	useRouter(): void {
 		this.app.use('/users', this.usersController.router);
 	}
@@ -32,6 +37,7 @@ export class App {
 	}
 
 	public async init(): Promise<void> {
+		this.useMiddleware();
 		this.useRouter();
 		this.useExeptionFilter();
 		this.server = this.app.listen(this.port);

@@ -6,6 +6,8 @@ import { COMPONENT_TYPE } from '../types';
 
 import 'reflect-metadata';
 import { Users } from './users.controller.interface';
+import { UserSignIn } from './dto/user-sign-in.dto';
+import { UserSignUp } from './dto/user-sign-up.dto';
 
 @injectable()
 export class UsersController extends BaseController implements Users {
@@ -17,11 +19,12 @@ export class UsersController extends BaseController implements Users {
 		]);
 	}
 
-	signIn(req: Request, res: Response, next: NextFunction): void {
-		this.ok(res, 'Sign In Test');
+	signIn(req: Request<{}, {}, UserSignIn>, res: Response, next: NextFunction): void {
+		console.info(req.body);
+		this.ok(res, 'Sign In');
 	}
 
-	signUp(req: Request, res: Response, next: NextFunction): void {
+	signUp(req: Request<{}, {}, UserSignUp>, res: Response, next: NextFunction): void {
 		this.ok(res, 'Sign Up');
 	}
 }
