@@ -1,15 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
-import { Exeption } from './exeption.interface';
+import { IExeptionFilter } from './exeption-filter.interface';
 import { injectable, inject } from 'inversify';
 import { HTTPError } from './http-error.class';
-import { Logger } from '../logger/logger.interface';
+import { ILogger } from '../logger/logger.interface';
 import { COMPONENT_TYPE } from '../types';
 
 import 'reflect-metadata';
 
 @injectable()
-export class ExeptionFilter implements Exeption {
-	constructor(@inject(COMPONENT_TYPE.Logger) private logger: Logger) {}
+export class ExeptionFilter implements IExeptionFilter {
+	constructor(@inject(COMPONENT_TYPE.Logger) private logger: ILogger) {}
+
 	catch(error: Error | HTTPError, request: Request, response: Response, next: NextFunction): void {
 		if (error instanceof HTTPError) {
 			this.logger.error(`[${error.context}] Ошибка ${error.statusCode}: ${error.message}`);

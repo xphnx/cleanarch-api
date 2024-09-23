@@ -1,13 +1,13 @@
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { UsersController } from './users/users.controller';
-import { Logger } from './logger/logger.interface';
+import { ILogger } from './logger/logger.interface';
 import { injectable, inject } from 'inversify';
 import { COMPONENT_TYPE } from './types';
-import { Exeption } from './errors/exeption.interface';
 import { json } from 'body-parser';
 
 import 'reflect-metadata';
+import { ExeptionFilter } from './errors/exeption-filter.service';
 
 @injectable()
 export class App {
@@ -16,9 +16,9 @@ export class App {
 	port: number;
 
 	constructor(
-		@inject(COMPONENT_TYPE.Logger) private logger: Logger,
-		@inject(COMPONENT_TYPE.Users) private usersController: UsersController,
-		@inject(COMPONENT_TYPE.ExeptionFilter) private exeptionFilter: Exeption,
+		@inject(COMPONENT_TYPE.Logger) private logger: ILogger,
+		@inject(COMPONENT_TYPE.UsersController) private usersController: UsersController,
+		@inject(COMPONENT_TYPE.ExeptionFilter) private exeptionFilter: ExeptionFilter,
 	) {
 		this.app = express();
 		this.port = 8000;
