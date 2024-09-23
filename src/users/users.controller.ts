@@ -8,6 +8,7 @@ import 'reflect-metadata';
 import { Users } from './users.controller.interface';
 import { UserSignIn } from './dto/user-sign-in.dto';
 import { UserSignUp } from './dto/user-sign-up.dto';
+import { User } from './user.entity';
 
 @injectable()
 export class UsersController extends BaseController implements Users {
@@ -20,11 +21,10 @@ export class UsersController extends BaseController implements Users {
 	}
 
 	signIn(req: Request<{}, {}, UserSignIn>, res: Response, next: NextFunction): void {
-		console.info(req.body);
 		this.ok(res, 'Sign In');
 	}
 
-	signUp(req: Request<{}, {}, UserSignUp>, res: Response, next: NextFunction): void {
+	async signUp(req: Request<{}, {}, UserSignUp>, res: Response, next: NextFunction): Promise<void> {
 		this.ok(res, 'Sign Up');
 	}
 }
