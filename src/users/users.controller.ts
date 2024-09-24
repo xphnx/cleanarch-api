@@ -8,6 +8,7 @@ import { UserSignIn } from './dto/user-sign-in.dto';
 import { UserSignUp } from './dto/user-sign-up.dto';
 import { UsersService } from './users.service';
 import { HTTPError } from '../errors/http-error.class';
+import { ValidateMiddleware } from '../common/validate.middleware';
 
 import 'reflect-metadata';
 
@@ -19,7 +20,12 @@ export class UsersController extends BaseController implements IUsersController 
 	) {
 		super(loggerService);
 		this.bindRoutes([
-			{ path: '/sign-in', method: 'post', handler: this.signIn },
+			{
+				path: '/sign-in',
+				method: 'post',
+				handler: this.signIn,
+				middlewares: [new ValidateMiddleware(UserSignIn)],
+			},
 			{ path: '/sign-up', method: 'post', handler: this.signUp },
 		]);
 	}
