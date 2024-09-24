@@ -22,6 +22,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "clinic": "^13.0.0",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "inversify": "^6.0.2",
     "reflect-metadata": "^0.2.2",

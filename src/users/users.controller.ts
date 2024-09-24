@@ -6,9 +6,9 @@ import { COMPONENT_TYPE } from '../types';
 import { IUsersController } from './users.controller.interface';
 import { UserSignIn } from './dto/user-sign-in.dto';
 import { UserSignUp } from './dto/user-sign-up.dto';
-import { UsersService } from './users.service';
 import { HTTPError } from '../errors/http-error.class';
 import { ValidateMiddleware } from '../common/validate.middleware';
+import { IUsersService } from './users.service.interface';
 
 import 'reflect-metadata';
 
@@ -16,7 +16,7 @@ import 'reflect-metadata';
 export class UsersController extends BaseController implements IUsersController {
 	constructor(
 		@inject(COMPONENT_TYPE.Logger) private loggerService: ILogger,
-		@inject(COMPONENT_TYPE.UsersService) private usersService: UsersService,
+		@inject(COMPONENT_TYPE.UsersService) private usersService: IUsersService,
 	) {
 		super(loggerService);
 		this.bindRoutes([

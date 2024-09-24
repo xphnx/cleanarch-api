@@ -4,6 +4,7 @@ const COMPONENT_TYPE = {
 	UsersController: Symbol.for('UsersController'),
 	UsersService: Symbol.for('UsersService'),
 	ExeptionFilter: Symbol.for('ExeptionFilter'),
+	ConfigService: Symbol.for('ConfigService'),
 };
 
 export { COMPONENT_TYPE };
