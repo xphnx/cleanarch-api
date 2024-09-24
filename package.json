@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "node ./dist/main.js",
     "dev": "nodemon",
+    "generate": "prisma generate",
     "dev:inspect": "nodemon -e ts,json --exec node --inspect=localhost:9222 -r ts-node/register src/main.ts",
     "lint": "eslint ./src/**",
     "lint:fix": "eslint ./src/** --fix",
@@ -16,6 +17,7 @@
   "author": "xphnx",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.19.1",
     "autocannon": "^7.15.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
@@ -36,8 +38,10 @@
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "nodemon": "^3.1.7",
     "prettier": "^2.4.1",
+    "prisma": "^5.19.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }

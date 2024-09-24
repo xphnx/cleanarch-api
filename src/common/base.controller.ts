@@ -1,10 +1,8 @@
 import { Response, Router } from 'express';
-import { injectable, inject } from 'inversify';
-import { IControllerRoute } from './route.interface';
+import { inject, injectable } from 'inversify';
 import { ILogger } from '../logger/logger.interface';
 import { COMPONENT_TYPE } from '../types';
-
-import 'reflect-metadata';
+import { IControllerRoute } from './route.interface';
 
 @injectable()
 export abstract class BaseController {
@@ -39,6 +37,7 @@ export abstract class BaseController {
 			const middleware = route.middlewares?.map((middleware) => middleware.exec.bind(middleware));
 
 			const pipeline = middleware ? [...middleware, handler] : handler;
+
 			this.router[route.method](route.path, pipeline);
 		}
 	}

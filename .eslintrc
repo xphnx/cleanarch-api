@@ -2,7 +2,8 @@
 	"root": true,
 	"parser": "@typescript-eslint/parser",
 	"plugins": [
-		"@typescript-eslint"
+		"@typescript-eslint",
+		"simple-import-sort"
 	],
 	"extends": [
 		"eslint:recommended",
@@ -19,6 +20,42 @@
 		"@typescript-eslint/explicit-function-return-type": [
 			"warn"
 		],
+		"simple-import-sort/imports": [
+        "warn",
+			{
+				"groups": [
+					[
+						/* React */
+						"reflect-metadata",
+						/* Libs */
+						"^[a-zA-Z]",
+						/* Alias */
+						"^@/([a-zA-Z]+/*)",
+						/* Parent */
+						"^\\.\\.(?!/?$)",
+						"^\\.\\./?$",
+						/* Other relative */
+						"^\\./(?=.*/)(?!/?$)",
+						"^\\.(?!/?$)",
+						"^\\./?$",
+						/* Style */
+						"\\style\\.ts$"
+					]
+				]
+			}
+		],
+    	"simple-import-sort/exports": "warn",
+		"padding-line-between-statements": [
+			"error",
+			{"blankLine": "always", "prev": "import", "next": "*" },
+			{"blankLine": "any", "prev": "import", "next": "import" },
+			{"blankLine": "always", "prev": "*", "next": ["const", "let", "var"] },
+			{"blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+			{"blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
+			{"blankLine": "always", "prev": "*", "next": ["class", "if", "while", "switch", "try"] },
+			{"blankLine": "always", "prev": ["class", "if", "while", "switch", "try"], "next": "*" },
+			{"blankLine": "always", "prev": "*", "next": "return" }
+    	],
 		"prettier/prettier": [
 			"error",
 			{
