@@ -23,9 +23,9 @@ export class UsersService implements IUsersService {
 
 		await user.setPassword(password, salt);
 
-		const existsUser = await this.usersRepository.find(email);
+		const existedUser = await this.usersRepository.find(email);
 
-		if (existsUser) {
+		if (existedUser) {
 			return null;
 		}
 
@@ -33,6 +33,15 @@ export class UsersService implements IUsersService {
 	}
 
 	async validateUser(dto: UserSignIn): Promise<boolean> {
-		return true;
+		const { email, password } = dto;
+		const existedUser = await this.usersRepository.find(email);
+
+		if (!existedUser) {
+			return false;
+		}
+
+		const user = new User(existedUser.name, existedUser.email, existedUser.password);
+
+		return user.comparePasswords(password);
 	}
 }

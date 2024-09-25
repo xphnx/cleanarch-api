@@ -24,12 +24,23 @@ export class UsersController extends BaseController implements IUsersController 
 				handler: this.signIn,
 				middlewares: [new ValidateMiddleware(UserSignIn)],
 			},
-			{ path: '/sign-up', method: 'post', handler: this.signUp },
+			{
+				path: '/sign-up',
+				method: 'post',
+				handler: this.signUp,
+				middlewares: [new ValidateMiddleware(UserSignUp)],
+			},
 		]);
 	}
 
-	signIn(req: Request<{}, {}, UserSignIn>, res: Response, next: NextFunction): void {
-		this.ok(res, 'Sign In');
+	async signIn(req: Request<{}, {}, UserSignIn>, res: Response, next: NextFunction): Promise<void> {
+		const result = await this.usersService.validateUser(req.body);
+
+		if (!result) {
+			return next(new HTTPError(401, 'Validation error'));
+		}
+
+		this.ok(res, {});
 	}
 
 	async signUp(req: Request<{}, {}, UserSignUp>, res: Response, next: NextFunction): Promise<void> {
