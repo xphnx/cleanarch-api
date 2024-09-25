@@ -2,6 +2,8 @@ import { json } from 'body-parser';
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { inject, injectable } from 'inversify';
+import { AuthMiddleware } from './common/auth.middleware';
+import { IConfigService } from './config/config.interface';
 import { PrismaService } from './database/prisma.service';
 import { IExeptionFilter } from './errors/exeption-filter.interface';
 import { ILogger } from './logger/logger.interface';
@@ -19,6 +21,7 @@ export class App {
 		@inject(COMPONENT_TYPE.UsersController) private usersController: UsersController,
 		@inject(COMPONENT_TYPE.ExeptionFilter) private exeptionFilter: IExeptionFilter,
 		@inject(COMPONENT_TYPE.PrismaService) private prismaService: PrismaService,
+		@inject(COMPONENT_TYPE.ConfigService) private configService: IConfigService,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -26,6 +29,10 @@ export class App {
 
 	useMiddleware(): void {
 		this.app.use(json());
+
+		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
+
+		this.app.use(authMiddleware.exec.bind(authMiddleware));
 	}
 
 	useRouter(): void {
