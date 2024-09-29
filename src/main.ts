@@ -32,16 +32,16 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IUsersRepository>(COMPONENT_TYPE.UsersRepository).to(UsersRepository).inSingletonScope();
 });
 
-const bootstrap = (): BootstrapReturn => {
+const bootstrap = async (): Promise<BootstrapReturn> => {
 	const appContainer = new Container();
 
 	appContainer.load(appBindings);
 
 	const app = appContainer.get<App>(COMPONENT_TYPE.Application);
 
-	app.init();
+	await app.init();
 
 	return { appContainer, app };
 };
 
-export const { app, appContainer } = bootstrap();
+export const boot = bootstrap();
